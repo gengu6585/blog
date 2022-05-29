@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<header class="header" id="header" th:fragment= "nav()">
+    <div class="header-inner">
+        <nav class="site-nav">
+            <ul class="menu" id="menu">
+                <li class="menu-item menu-item-首页"><a href="/" rel="section"><i
+                        class="menu-item-icon fas fa-meteor"></i><br>首页</a></li>
+                <li class="menu-item menu-item-实验室"><a href="javascript:;" rel="section"><i
+                        class="menu-item-icon fas fa-magic"></i><br>分类</a>
+                    <ul class="submenu submenu-实验室">
+                        <li class="submenu-item submenu-item-rsshub" th:each="entry:${categoriesEntries}"><a rel="section" th:href="'/category/'+${entry.key}"
+                                                                        th:text="${entry.key}" ></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i
+                        class="menu-item-icon fas fa-archive"></i><br>归档</a></li>
+                <li class="menu-item menu-item-关于我"><a href="/selfpage/about/" rel="section"><i
+                        class="menu-item-icon fas fa-heartbeat"></i><br>关于我</a></li>
+                <li class="menu-item search">
+                    <form  class="search-form"><input class="search-input" name="keyword" placeholder="站内搜索"
+                                                     type="text">
+                        <button class="search-submit" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+        <div class="site-brand-wrapper">
+            <div class="site-brand-bg">
+                <picture>
+                    <img loading="lazy"
+                         src="/user/img/top.png">
+                </picture>
+            </div>
+            <div class="site-meta">
+                <div class="custom-logo-site-title">
+                    <div class="brand"><span class="logo-line-before"><i></i></span>
+                        <div class="site-title" style="display:none">
+                            <div class="animate" id="animate-stroke"><span><svg><use
+                                    xlink:href="#strokeH"></use></svg> </span><span><svg><use
+                                    xlink:href="#strokei"></use></svg> </span><span><svg><use
+                                    xlink:href="#stroke,"></use></svg> </span><span><svg><use
+                                    xlink:href="#stroke "></use></svg> </span><span><svg><use
+                                    xlink:href="#strokeD"></use></svg> </span><span><svg><use
+                                    xlink:href="#strokeI"></use></svg> </span><span><svg><use
+                                    xlink:href="#strokeY"></use></svg> </span><span><svg><use
+                                    xlink:href="#strokeg"></use></svg> </span><span><svg><use
+                                    xlink:href="#strokeo"></use></svg> </span><span><svg><use
+                                    xlink:href="#stroked"></use></svg></span></div>
+                            <div class="animate" id="animate"><span><svg><text
+                                    id="strokeH">H</text></svg> </span><span><svg><text id="strokei">i</text></svg> </span><span><svg><text
+                                    id="stroke,">,</text></svg> </span><span><svg><text id="stroke "></text></svg> </span><span><svg><text
+                                    id="strokeD">D</text></svg> </span><span><svg><text id="strokeI">I</text></svg> </span><span><svg><text
+                                    id="strokeY">Y</text></svg> </span><span><svg><text id="strokeg">g</text></svg> </span><span><svg><text
+                                    id="strokeo">o</text></svg> </span><span><svg><text id="stroked">d</text></svg></span>
+                            </div>
+                            <div class="guide" id="guide">
+                                <span>H</span><span>i</span><span>,</span><span> </span><span>D</span><span>I</span><span>Y</span><span>g</span><span>o</span><span>d</span>
+                            </div>
+                        </div>
+                        <span class="logo-line-after"><i></i></span></div>
+                </div>
+                <p class="site-subtitle"></p></div>
+            <div class="site-nav-toggle">
+                <button><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span>
+                </button>
+            </div>
+        </div>
+        <div class="site-master" >
+            <picture>
+                <img alt="" class="site-master-avatar scaleup" itemprop="image"
+                     loading="lazy"
+                     src="/user/img/logo.png"></picture>
+            <h2 class="site-master-description scaleup">一只麻袋猫</h2></div>
+
+    </div>
+</header>
+
+</body>
+</html>

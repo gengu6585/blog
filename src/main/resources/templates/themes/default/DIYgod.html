@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html class="theme-next pisces" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="themes/default/DIYgodhead::head(null)">
+    </title>
+</head>
+<body class="theme-darling">
+<div class="container sidebar-position-right page-home">
+    <header class="header" id="header" th:replace="themes/default/DIYgodNav::nav()">
+    </header>
+    <main class="main" id="main">
+        <div class="main-inner">
+            <div class="content-wrap">
+                <div class="content" id="content">
+                    <section class="posts-expand" id="posts">
+                        <article class="post post-type-normal" th:each="article:${articles.list}">
+                            <div class="post-date">
+                                <div class="post-month"
+                                     th:text="${commons.fmtdate(article.created,'MM')}+'月'"></div>
+                                <div class="post-day" th:text="${commons.fmtdate(article.created,'dd')}"></div>
+                            </div>
+                            <div class="post-badge"><span th:utext="${commons.show_categories(article.categories)}">
+                            </div>
+                            <div class="post-block">
+                                <header class="post-header"><h1 class="post-title" itemprop="name headline">
+                                    <a class="post-title-link scaleup" th:href="${commons.permalink(article)}"
+                                       th:text="${article.title}"></a></h1>
+                                    <div class="post-meta">
+                                        <span class="post-time">
+                                            <span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span>
+                                            <span class="post-meta-item-text">发表于</span>
+                                            <time itemprop="dateCreated datePublished" th:text="${commons.fmtdate(article.created,'yy-MM-dd')}"
+                                                  title="创建于"></time> </span>
+                                        <span class="post-wordcount">
+                                            <span class="post-meta-divider">•</span>
+                                            <span class="post-meta-item-icon"><i class="far fa-file-word"></i> </span>
+                                            <span class="post-meta-item-text">字数统计</span>
+                                            <span th:text="${commons.queryWords(article)}" title="字数统计"></span>
+                                        </span>
+                                        <!--                                        <span id="/2019/" class="leancloud_visitors" data-flag-title="2019 我做了什么"><span-->
+                                        <!--                                            class="post-meta-divider">•</span>-->
+                                        <span class="post-meta-item-icon"><i class="far fa-eye"></i> </span>
+                                        <span class="post-meta-item-text">被</span>
+                                        <span class="leancloud-visitors-count"
+                                              th:text="${article.hits==null?'':article.hits}"></span>
+                                        <span class="post-meta-item-text">人看爆</span>
+                                    </div>
+                                </header>
+                                <div class="post-body" itemprop="articleBody"
+                                     th:utext="${commons.getPreview(article.content)}">
+                                    <div class="post-button text-center"><a class="btn scaleup"
+                                                                            rel="contents"
+                                                                            th:href="${commons.permalink(article)}">阅读全文 &raquo;</a></div>
+                                </div>
+                                <footer class="post-footer"></footer>
+                            </div>
+                        </article>
+                    </section>
+                    <div class="pagination" th:replace="comm/macros::pagination(${articles},'page')">
+                    </div>
+                </div>
+            </div>
+            <div   th:replace="comm/macros::sidebar()"></div>
+        </div>
+    </main>
+    <div th:replace="themes/default/DIYgodFoot::footer()"></div>
+
+</div>
+<script src="/user/js/sagiri.min.js?v=1.0.1" type="text/javascript"></script>
+<script>"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("/sw.js")})</script>
+</body>
+</html>
