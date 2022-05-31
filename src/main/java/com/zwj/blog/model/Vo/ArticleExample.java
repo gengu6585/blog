@@ -14,20 +14,20 @@ public class ArticleExample {
         oredCriteria = new ArrayList<Criteria>();
     }
 
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
-    public boolean isDistinct() {
-        return distinct;
+    public String getOrderByClause() {
+        return orderByClause;
     }
 
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
+    }
+
+    public boolean isDistinct() {
+        return distinct;
     }
 
     public List<Criteria> getOredCriteria() {
@@ -824,6 +824,76 @@ public class ArticleExample {
             return (Criteria) this;
         }
 
+        public Criteria andFileDirIsNull() {
+            addCriterion("file_dir is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirIsNotNull() {
+            addCriterion("file_dir is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirEqualTo(String value) {
+            addCriterion("file_dir =", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirNotEqualTo(String value) {
+            addCriterion("file_dir <>", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirGreaterThan(String value) {
+            addCriterion("file_dir >", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirGreaterThanOrEqualTo(String value) {
+            addCriterion("file_dir >=", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirLessThan(String value) {
+            addCriterion("file_dir <", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirLessThanOrEqualTo(String value) {
+            addCriterion("file_dir <=", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirLike(String value) {
+            addCriterion("file_dir like", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirNotLike(String value) {
+            addCriterion("file_dir not like", value, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirIn(List<String> values) {
+            addCriterion("file_dir in", values, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirNotIn(List<String> values) {
+            addCriterion("file_dir not in", values, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirBetween(String value1, String value2) {
+            addCriterion("file_dir between", value1, value2, "fileDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileDirNotBetween(String value1, String value2) {
+            addCriterion("file_dir not between", value1, value2, "fileDir");
+            return (Criteria) this;
+        }
+
         public Criteria andCategoriesIsNull() {
             addCriterion("categories is null");
             return (Criteria) this;
@@ -1219,6 +1289,38 @@ public class ArticleExample {
 
         private String typeHandler;
 
+        public String getCondition() {
+            return condition;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public Object getSecondValue() {
+            return secondValue;
+        }
+
+        public boolean isNoValue() {
+            return noValue;
+        }
+
+        public boolean isSingleValue() {
+            return singleValue;
+        }
+
+        public boolean isBetweenValue() {
+            return betweenValue;
+        }
+
+        public boolean isListValue() {
+            return listValue;
+        }
+
+        public String getTypeHandler() {
+            return typeHandler;
+        }
+
         protected Criterion(String condition) {
             super();
             this.condition = condition;
@@ -1253,38 +1355,6 @@ public class ArticleExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
-        }
-
-        public String getCondition() {
-            return condition;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public Object getSecondValue() {
-            return secondValue;
-        }
-
-        public boolean isNoValue() {
-            return noValue;
-        }
-
-        public boolean isSingleValue() {
-            return singleValue;
-        }
-
-        public boolean isBetweenValue() {
-            return betweenValue;
-        }
-
-        public boolean isListValue() {
-            return listValue;
-        }
-
-        public String getTypeHandler() {
-            return typeHandler;
         }
     }
 }

@@ -29,7 +29,7 @@ import java.util.Set;
 
 
 @Controller
-@RequestMapping("")
+@RequestMapping("admin")
 public class OptionController extends BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OptionController.class);
 
@@ -71,7 +71,7 @@ public class OptionController extends BaseController {
      * @return: com.zwj.blog.model.Bo.ForeResponse
      * @author zwj
      */
-    @PostMapping("/admin/setting")
+    @PostMapping("/setting")
     @ResponseBody
     public ForeResponse saveSetting(HttpServletRequest req) {
         String theme = req.getParameter("site_theme");
@@ -96,7 +96,7 @@ public class OptionController extends BaseController {
      *
      * @return
      */
-    @PostMapping(value = "/admin/setting/backup")
+    @PostMapping(value = "/setting/backup")
     @ResponseBody
     public ForeResponse backup(@RequestParam String bk_type, @RequestParam String bk_path,
                                HttpServletRequest request) {

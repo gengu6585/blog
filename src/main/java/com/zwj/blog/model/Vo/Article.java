@@ -3,25 +3,45 @@ package com.zwj.blog.model.Vo;
 import java.io.Serializable;
 
 public class Article implements Serializable {
-    private static final long serialVersionUID = 1L;
     private Integer cid;
+
     private String title;
+
     private String slug;
+
     private Integer created;
+
     private Integer modified;
+
     private Integer words;
+
     private String music;
+
     private Integer authorId;
+
     private String type;
+
     private String status;
+
     private String tags;
+
+    private String fileDir;
+
     private String categories;
+
     private Integer hits;
+
     private Integer commentsNum;
+
     private Boolean allowComment;
+
     private Boolean allowPing;
+
     private Boolean allowFeed;
+
     private String content;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getCid() {
         return cid;
@@ -109,6 +129,14 @@ public class Article implements Serializable {
 
     public void setTags(String tags) {
         this.tags = tags == null ? null : tags.trim();
+    }
+
+    public String getFileDir() {
+        return fileDir;
+    }
+
+    public void setFileDir(String fileDir) {
+        this.fileDir = fileDir == null ? null : fileDir.trim();
     }
 
     public String getCategories() {

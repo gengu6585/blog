@@ -10,28 +10,24 @@ public class UploadFileExample {
 
     protected List<Criteria> oredCriteria;
 
-    private Integer limit;
-
-    private Integer offset;
-
     public UploadFileExample() {
         oredCriteria = new ArrayList<Criteria>();
-    }
-
-    public String getOrderByClause() {
-        return orderByClause;
     }
 
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
-    public boolean isDistinct() {
-        return distinct;
+    public String getOrderByClause() {
+        return orderByClause;
     }
 
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
+    }
+
+    public boolean isDistinct() {
+        return distinct;
     }
 
     public List<Criteria> getOredCriteria() {
@@ -65,22 +61,6 @@ public class UploadFileExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public Integer getOffset() {
-        return offset;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
     }
 
     protected abstract static class GeneratedCriteria {
@@ -454,6 +434,136 @@ public class UploadFileExample {
             return (Criteria) this;
         }
 
+        public Criteria andFilesDirIsNull() {
+            addCriterion("files_dir is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirIsNotNull() {
+            addCriterion("files_dir is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirEqualTo(String value) {
+            addCriterion("files_dir =", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirNotEqualTo(String value) {
+            addCriterion("files_dir <>", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirGreaterThan(String value) {
+            addCriterion("files_dir >", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirGreaterThanOrEqualTo(String value) {
+            addCriterion("files_dir >=", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirLessThan(String value) {
+            addCriterion("files_dir <", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirLessThanOrEqualTo(String value) {
+            addCriterion("files_dir <=", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirLike(String value) {
+            addCriterion("files_dir like", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirNotLike(String value) {
+            addCriterion("files_dir not like", value, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirIn(List<String> values) {
+            addCriterion("files_dir in", values, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirNotIn(List<String> values) {
+            addCriterion("files_dir not in", values, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirBetween(String value1, String value2) {
+            addCriterion("files_dir between", value1, value2, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilesDirNotBetween(String value1, String value2) {
+            addCriterion("files_dir not between", value1, value2, "filesDir");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIsNull() {
+            addCriterion("article_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIsNotNull() {
+            addCriterion("article_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdEqualTo(Integer value) {
+            addCriterion("article_id =", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotEqualTo(Integer value) {
+            addCriterion("article_id <>", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdGreaterThan(Integer value) {
+            addCriterion("article_id >", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("article_id >=", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdLessThan(Integer value) {
+            addCriterion("article_id <", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdLessThanOrEqualTo(Integer value) {
+            addCriterion("article_id <=", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIn(List<Integer> values) {
+            addCriterion("article_id in", values, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotIn(List<Integer> values) {
+            addCriterion("article_id not in", values, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdBetween(Integer value1, Integer value2) {
+            addCriterion("article_id between", value1, value2, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("article_id not between", value1, value2, "articleId");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;
@@ -515,9 +625,6 @@ public class UploadFileExample {
         }
     }
 
-    /**
-     *
-     */
     public static class Criteria extends GeneratedCriteria {
 
         protected Criteria() {
@@ -541,6 +648,38 @@ public class UploadFileExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        public String getCondition() {
+            return condition;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public Object getSecondValue() {
+            return secondValue;
+        }
+
+        public boolean isNoValue() {
+            return noValue;
+        }
+
+        public boolean isSingleValue() {
+            return singleValue;
+        }
+
+        public boolean isBetweenValue() {
+            return betweenValue;
+        }
+
+        public boolean isListValue() {
+            return listValue;
+        }
+
+        public String getTypeHandler() {
+            return typeHandler;
+        }
 
         protected Criterion(String condition) {
             super();
@@ -576,38 +715,6 @@ public class UploadFileExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
-        }
-
-        public String getCondition() {
-            return condition;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public Object getSecondValue() {
-            return secondValue;
-        }
-
-        public boolean isNoValue() {
-            return noValue;
-        }
-
-        public boolean isSingleValue() {
-            return singleValue;
-        }
-
-        public boolean isBetweenValue() {
-            return betweenValue;
-        }
-
-        public boolean isListValue() {
-            return listValue;
-        }
-
-        public String getTypeHandler() {
-            return typeHandler;
         }
     }
 }

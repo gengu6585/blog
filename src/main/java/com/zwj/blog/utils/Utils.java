@@ -9,9 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
@@ -354,8 +352,13 @@ public class Utils {
         return false;
     }
 
-    public static String getFileKey(String name) {
-        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
+
+    public static String getFileKey(String name, String uuid) {
+        String prefix = null;
+        if (uuid != null) {
+            prefix = "/upload/" + uuid;
+        }
+        else prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
         if (!new File(UploadFileController.CLASSPATH + prefix).exists()) {
             new File(UploadFileController.CLASSPATH + prefix).mkdirs();
         }
@@ -371,7 +374,7 @@ public class Utils {
             if (index >= 0) {
                 ext = StringUtils.trimToNull(name.substring(index + 1));
             }
-            return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
+            return prefix + "/" + name;
         }
     }
 
@@ -391,6 +394,73 @@ public class Utils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static String ReplaceImagePath(String content,String prefix) {
+        Set<String> pics = new HashSet<>();
+        String img = "";
+        Pattern p_image;
+        Matcher m_image;
+        //     String regEx_img = "<img.*src=(.*?)[^>]*?>"; //图片链接地址
+        String regEx_img = "(<img.*src\\s*=\\s*\"\\s*)([^\"]*)(\\s*\"[^>]*?>)";
+        p_image = Pattern.compile
+                (regEx_img, Pattern.CASE_INSENSITIVE);
+        m_image = p_image.matcher(content);
+        StringBuffer buffer = new StringBuffer();
+        while (m_image.find()) {
+            // 得到<img />数据
+            img = m_image.group();
+//            int left = m_image.start();
+//            int right = m_image.end();
+            String group1 = m_image.group(1);
+            String src = m_image.group(2);
+            String group2 = m_image.group(3);
+            int index = src.lastIndexOf("/");
+            String replaceString = "";
+            if (index != -1 && index != src.length() - 1) {
+                replaceString = src.substring(index + 1);
+            } else {
+                replaceString = src;
+            }
+            String fileKey = Utils.getFileKey(replaceString, prefix);
+
+            m_image.appendReplacement(buffer, group1 + fileKey + group2);
+        }
+
+        m_image.appendTail(buffer);
+        content = buffer.toString();
+        buffer = new StringBuffer();
+        Pattern pattern2;
+        Matcher mather2;
+        //     String regEx_img = "<img.*src=(.*?)[^>]*?>"; //图片链接地址
+        String reg2 = "(!\\[.*?\\]\\()(.*?)(\\))";
+        pattern2 = Pattern.compile
+                (reg2, Pattern.CASE_INSENSITIVE);
+        mather2 = pattern2.matcher(content);
+        while (mather2.find()) {
+            // 得到<img />数据
+//            int left = m_image.start();
+//            int right = m_image.end();
+            String group1 = mather2.group(1);
+            String src = mather2.group(2);
+            String group2 = mather2.group(3);
+            int index = src.lastIndexOf("/");
+            String replaceString = "";
+            if (index != -1 && index != src.length() - 1) {
+                replaceString = src.substring(index + 1);
+            } else {
+                replaceString = src;
+            }
+            String fileKey = Utils.getFileKey(replaceString, prefix);
+
+            mather2.appendReplacement(buffer, group1 + fileKey + group2);
+        }
+
+        mather2.appendTail(buffer);
+
+
+
+        return buffer.toString();
     }
 
     /**

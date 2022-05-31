@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin/article")
@@ -58,6 +58,8 @@ public class ArticleController extends BaseController {
     public String newArticle(HttpServletRequest request) {
         List<Meta> categories = metasService.getMetas(SiteProperty.CATEGORY.getProperty());
         request.setAttribute("categories", categories);
+        UUID uuid = UUID.randomUUID();
+        request.setAttribute("file_dir",uuid.toString());
         return "admin/article_edit";
     }
 
@@ -68,6 +70,11 @@ public class ArticleController extends BaseController {
         List<Meta> categories = metasService.getMetas(SiteProperty.CATEGORY.getProperty());
         request.setAttribute("categories", categories);
         request.setAttribute("active", "article");
+        String fileDir = contents.getFileDir();
+        if (fileDir == null) {
+            UUID uuid = UUID.randomUUID();
+            request.setAttribute("file_dir", uuid.toString());
+        }
         return "admin/article_edit";
     }
 

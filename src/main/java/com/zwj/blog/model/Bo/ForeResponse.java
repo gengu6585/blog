@@ -75,6 +75,9 @@ public class ForeResponse<T> {
     public static <T> ForeResponse success(T payload) {
         return new ForeResponse(true, payload);
     }
+    public static <T> ForeResponse fail(T payload,String message,int code) {
+        return new ForeResponse(true, payload,code);
+    }
 
     public static <T> ForeResponse success(int code) {
         return new ForeResponse(true, null, code);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:with="title='文件管理',active='attach'" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='文件管理',active='attach'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
 <link href="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet"/>
 <style>
@@ -56,7 +56,7 @@
                             <div class="m-b-30">
                                 <form action="#" class="dropzone" id="dropzone">
                                     <div class="fallback">
-                                        <input multiple="multiple" name="files" type="file"/>
+                                        <input name="files" type="file" multiple="multiple"/>
                                     </div>
                                     <div class="dz-message">
                                         将文件拖至此处或点击上传.
@@ -78,24 +78,24 @@
                         <th:block th:unless="${commons.is_empty(attachs)}">
                             <th:block th:each="attach : ${attachs.list}">
                                 <div class="col-md-2 text-center m-t-10">
-                                    <a target="_blank" th:href="${commons.site_url(attach.fkey)}">
+                                    <a th:href="${commons.site_url(attach.fkey)}" target="_blank">
                                         <img class="attach-img"
                                              th:src="@{${attach.ftype == 'image'}?${attach.fkey}: '/admin/images/attach.png'}"
                                              th:title="${attach.fname}"/>
                                     </a>
                                     <div class="clearfix m-t-10">
-                <span class="attach-text" data-placement="top" data-toggle="tooltip"
+                <span class="attach-text" data-toggle="tooltip" data-placement="top"
                       th:attr="data-original-title=${attach.fname}"
                       th:text="${commons.substr(attach.fname, 12)}"></span>
                                     </div>
                                     <div class="clearfix">
-                                        <button class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy" th:attr="url=${commons.site_url(attach.fkey)}"
-                                                type="button">
+                                        <button th:attr="url=${commons.site_url(attach.fkey)}" type="button"
+                                                class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
                                             <i class="fa fa-copy"></i> <span>复制</span>
                                         </button>
-                                        <button class="btn btn-danger btn-sm waves-effect waves-light m-t-5"
-                                                th:onclick="'delAttach('+${attach.id}+');'"
-                                                type="button">
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm waves-effect waves-light m-t-5"
+                                                th:onclick="'delAttach('+${attach.id}+');'">
                                             <i class="fa fa-trash-o"></i> <span>删除</span>
                                         </button>
                                     </div>
@@ -113,7 +113,7 @@
 <div th:replace="admin/footer :: footer"></div>
 <script src="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
-<script th:inline="javascript" type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var tale = new $.tale();
 
@@ -146,13 +146,13 @@
         e.clearSelection();
     });
 
-    function delAttach(id) {
+    var delAttach=function (id) {
         tale.alertConfirm({
             title: '确定删除该附件吗?',
             then: function () {
                 tale.post({
                     url: '/admin/attach/delete',
-                    data: {id: id},
+                    data: {articleId: id},
                     success: function (result) {
                         if (result && result.success) {
                             tale.alertOkAndReload('附件删除成功');

@@ -24,7 +24,7 @@
     <div class="clearfix">
         <ul class="pagination m-b-5 pull-right">
             <li th:if="${pageInfo.hasPreviousPage}">
-                <a aria-label="Previous" th:href="@{'?page='+${pageInfo.prePage}}">
+                <a th:href="@{'?page='+${pageInfo.prePage}}" aria-label="Previous">
                     <i class="fa fa-angle-left"></i>&nbsp;上一页
                 </a>
             </li>
@@ -37,7 +37,7 @@
 
             <th:block th:if="${pageInfo.hasNextPage}">
                 <li>
-                    <a aria-label="Next" th:href="@{'?page='+${pageInfo.nextPage}}">
+                    <a th:href="@{'?page='+${pageInfo.nextPage}}" aria-label="Next">
                         下一页&nbsp;<i class="fa fa-angle-right"></i>
                     </a>
                 </li>
@@ -183,7 +183,7 @@
 </div>
 
 
-<section  th:class="'site-overview-wrap sidebar-panel '+${style1} " th:fragment="about_me(style1,style2)"  th:style="${style2}">
+<section  th:fragment="about_me(style1,style2)" th:class="'site-overview-wrap sidebar-panel '+${style1} "  th:style="${style2}">
     <div class="site-overview">
         <div class="site-author motion-element" itemprop="author" itemscope
              itemtype="http://schema.org/Person">
@@ -240,7 +240,7 @@
             <span class="page-number current" th:text="${navIndex}"></span>
         </th:block>
         <th:block th:if="${pageInfo.pageNum!=navIndex}">
-            <a class="page-number" th:href="@{'/'+${prefix}+'/'+${navIndex}}" th:text="${navIndex}"></a>
+            <a class="page-number" th:text="${navIndex}" th:href="@{'/'+${prefix}+'/'+${navIndex}}"></a>
         </th:block>
     </th:block>
     <!--为最后一个加上省略号-->

@@ -2,15 +2,11 @@ package com.zwj.blog.dao;
 
 import com.zwj.blog.model.Vo.UploadFile;
 import com.zwj.blog.model.Vo.UploadFileExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
-@Component
 public interface UploadFileMapper {
-    long countByExample(UploadFileExample example);
+    int countByExample(UploadFileExample example);
 
     int deleteByExample(UploadFileExample example);
 

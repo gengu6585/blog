@@ -1,4 +1,4 @@
-package com.zwj.blog.utils;
+package com.zwj.blog;
 
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -22,7 +22,7 @@ public class GeneratorMain {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
         String genCfg = "/mbgConfiguration.xml";
-        File configFile = new File(com.zwj.blog.utils.GeneratorMain.class.getResource(genCfg).getFile());
+        File configFile = new File(GeneratorMain.class.getResource(genCfg).getFile());
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = null;
         try {

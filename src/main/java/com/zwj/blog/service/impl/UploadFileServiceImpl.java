@@ -23,6 +23,16 @@ public class UploadFileServiceImpl implements UploadFileService {
     private UploadFileMapper attachDao;
 
     @Override
+    public List<UploadFile> getAttachsByCid(Integer cid) {
+        UploadFileExample uploadFileExample = new UploadFileExample();
+        uploadFileExample.createCriteria().andArticleIdEqualTo(cid);
+        List<UploadFile> uploadFiles = attachDao.selectByExample(uploadFileExample);
+
+
+        return uploadFiles;
+    }
+
+    @Override
     public PageInfo<UploadFile> getAttachs(Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
         UploadFileExample uploadFileExample = new UploadFileExample();
@@ -41,13 +51,14 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     @Transactional
-    public void save(String fname, String fkey, String ftype, Integer author) {
+    public void save(String fname, String fkey, String ftype, Integer author,Integer articleId) {
         UploadFile attach = new UploadFile();
         attach.setFname(fname);
         attach.setAuthorId(author);
         attach.setFkey(fkey);
         attach.setFtype(ftype);
         attach.setCreated(DateKit.getCurrentUnixTime());
+        attach.setArticleId(articleId);
         attachDao.insertSelective(attach);
     }
 

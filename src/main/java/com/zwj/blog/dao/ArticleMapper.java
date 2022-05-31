@@ -3,9 +3,7 @@ package com.zwj.blog.dao;
 import com.zwj.blog.model.Bo.ArchiveBo;
 import com.zwj.blog.model.Vo.Article;
 import com.zwj.blog.model.Vo.ArticleExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapper {

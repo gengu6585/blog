@@ -1,13 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" th:with="title='保存文章',active='publish'" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="title='保存文章',active='publish'">
 <header th:replace="admin/header::headerFragment(${title},${active})"></header>
-<link rel="stylesheet" th:href="@{/admin/plugins/tagsinput/jquery.tagsinput.css}"/>
-<link rel="stylesheet" th:href="@{/admin/plugins/select2.dist.css/select2-bootstrap.css}"/>
-<link rel="stylesheet" th:href="@{/admin/plugins/toggles/toggles.css}"/>
+<link th:href="@{/admin/plugins/tagsinput/jquery.tagsinput.css}" rel="stylesheet"/>
+<link th:href="@{/admin/plugins/select2.dist.css/select2-bootstrap.css}" rel="stylesheet"/>
+<link th:href="@{/admin/plugins/toggles/toggles.css}" rel="stylesheet"/>
 
 <link href="//cdn.bootcss.com/multi-select/0.9.12/css/multi-select.css" rel="stylesheet"/>
+<link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
 <link href="//cdn.bootcss.com/select2/3.4.8/select2.min.css" rel="stylesheet"/>
-<link rel="stylesheet" th:href="@{/admin/plugins/md/css/style.css}"/>
+<link crossorigin="anonymous" integrity="sha512-7uSoC3grlnRktCWoO4LjHMjotq8gf9XDFQerPuaph+cqR7JC9XKGdvN+UwZMC14aAaBDItdRj3DcSDs4kMWUgg==" href="https://lib.baomitu.com/dropzone/5.9.3/dropzone.css" rel="stylesheet">
+<link th:href="@{/admin/plugins/md/css/style.css}" rel="stylesheet"/>
+<style>
+    #dropzone {
+        margin-bottom: 3rem;
+    }
+
+    .dropzone {
+        border: 2px dashed #0087F7;
+        border-radius: 5px;
+        background: white;
+        max-height: 500px;
+        overflow: auto;
+    }
+
+    .dropzone .dz-message {
+        font-weight: 400;
+    }
+
+    .dropzone .dz-message .note {
+        font-size: 0.8em;
+        font-weight: 200;
+        display: block;
+        margin-top: 1.4rem;
+    }
+
+    .attach-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 8px #333;
+    }
+
+    .attach-text {
+        font-size: 12px;
+        font-weight: 300;
+    }
+
+    .attach-img:hover {
+        background-color: #f9f9f9;
+    }
+</style>
 <style>
     #tags_tagsinput {
         background-color: #fafafa;
@@ -20,6 +62,41 @@
 
     #tags_addTag {
         margin-top: -5px;
+    }
+</style>
+<style>
+    #markdown_file.dropzone{
+        display: inline;
+        text-align: center;
+        width: 150px;
+        background-color: #00a0e9;
+        height: 20px;
+        position: absolute;
+        border-radius: 2px;
+        vertical-align: center;
+        right: 20%;
+        top: -20px;
+        color: white;
+        min-height: 0;
+        border: none;
+        /*padding: 0;*/
+    }
+    #markdown_file>div.dz-message{
+        height: 20px;
+        width: 150px;
+        right: 20%;
+        top: -20px;
+        position: absolute;
+    }
+    #markdown_message {
+        text-align: center;
+        position: absolute;
+        right: 20%;
+        top: -20px;
+        height: 20px;
+        width: 150px;
+        vertical-align: center;
+        /*border: none;*/
     }
 </style>
 <body class="fixed-left">
@@ -40,88 +117,102 @@
                         </h4>
                     </div>
                     <div class="col-md-12">
-                        <form id="articleForm" novalidate="novalidate" role="form">
-                            <input id="categories" name="categories" type="hidden"/>
-                            <input id="cid" name="cid"
-                                   th:value="${contents!=null and contents.cid!=null}?${contents.cid}: ''" type="hidden"/>
-                            <input id="status" name="status"
+                        <form id="articleForm" role="form" novalidate="novalidate">
+<!--                            用来提交的隐藏表单-->
+                            <input type="hidden" name="categories" id="categories"/>
+                            <input type="hidden" name="cid"
+                                   th:value="${contents!=null and contents.cid!=null}?${contents.cid}: ''" id="cid"/>
+                            <input type="hidden" name="file_dir"
+                                   th:value="${contents!=null and contents.fileDir!=null}?${contents.fileDir}: ${file_dir}" id="file_dir"/>
+                            <input type="hidden" name="status"
                                    th:value="${contents!=null and contents.status !=null}?${contents.status}: 'publish'"
-                                   type="hidden"/>
-                            <input id="allow_comment" name="allowComment"
+                                   id="status"/>
+                            <input type="hidden" name="allowComment"
                                    th:value="${contents!=null and contents.allowComment !=null}?${contents.allowComment}: true"
-                                   type="hidden"/>
-                            <input id="allow_ping" name="allowPing"
+                                   id="allow_comment"/>
+                            <input type="hidden" name="allowPing"
                                    th:value="${contents!=null and contents.allowPing !=null}?${contents.allowPing}: true"
-                                   type="hidden"/>
-                            <input id="allow_feed" name="allowFeed"
+                                   id="allow_ping"/>
+                            <input type="hidden" name="allowFeed"
                                    th:value="${contents!=null and contents.allowFeed !=null}?${contents.allowFeed}: true"
-                                   type="hidden"/>
-                            <input id="content-editor" name="content" type="hidden"/>
+                                   id="allow_feed"/>
+                            <input type="hidden" name="content" id="content-editor"/>
 
                             <div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-                                <input aria-required="true" class="form-control" name="title" placeholder="请输入文章标题（必须）"
+                                <input type="text" class="form-control" placeholder="请输入文章标题（必须）" name="title"
                                        required="required"
-                                       th:value="${contents!=null and contents.title!=null }?${contents.title}: ''"
-                                       type="text"/>
+                                       aria-required="true"
+                                       th:value="${contents!=null and contents.title!=null }?${contents.title}: ''"/>
                             </div><div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-                                <input aria-required="true" class="form-control" name="music" placeholder="输入网易云音乐ID"
-                                       th:value="${contents!=null and contents.music!=null }?${contents.music}: ''"
-                                       type="text"/>
+                                <input type="text" class="form-control" placeholder="输入网易云音乐ID" name="music"
+                                       aria-required="true"
+                                       th:value="${contents!=null and contents.music!=null }?${contents.music}: ''"/>
                             </div>
 
                             <div class="form-group col-md-6" style="padding: 0 0 0 10px;">
-                                <input class="form-control" name="slug"
-                                       placeholder="自定义访问路径，如：my-first-article  默认为文章id" th:value="${contents!=null and contents.slug !=null}?${contents.slug}: ''"
-                                       type="text"/>
+                                <input type="text" class="form-control"
+                                       placeholder="自定义访问路径，如：my-first-article  默认为文章id" name="slug"
+                                       th:value="${contents!=null and contents.slug !=null}?${contents.slug}: ''"/>
                             </div>
 
                             <div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-                                <input class="form-control" id="tags" name="tags" placeholder="请填写文章标签" th:value="${contents!=null and contents.tags !=null}?${contents.tags}: ''"
-                                       type="text"/>
+                                <input name="tags" id="tags" type="text" class="form-control" placeholder="请填写文章标签"
+                                       th:value="${contents!=null and contents.tags !=null}?${contents.tags}: ''"/>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <select class="select2 form-control" data-placeholder="请选择分类..." id="multiple-sel"
-                                        multiple="multiple">
+                                <select id="multiple-sel" class="select2 form-control" multiple="multiple"
+                                        data-placeholder="请选择分类...">
                                     <th:block th:if="${null == categories}">
-                                        <option selected="selected" value="默认分类">默认分类</option>
+                                        <option value="默认分类" selected="selected">默认分类</option>
                                     </th:block>
                                     <th:block th:unless="${null == categories}">
                                         <th:block th:each="c : ${categories}">
-                                            <option th:selected="${null !=contents and adminCommons.exist_cat(c, contents.categories)}?true:false" th:text="${c.name}"
-                                                    th:value="${c.name}"></option>
+                                            <option th:value="${c.name}" th:text="${c.name}"
+                                                    th:selected="${null !=contents and adminCommons.exist_cat(c, contents.categories)}?true:false"></option>
                                         </th:block>
                                     </th:block>
                                 </select>
                             </div>
+
+                            <div class="col-md-12 portlets">
+                                <!-- Your awesome content goes here -->
+                                <div class="m-b-30">
+                                    <div id="upload_pictures" class="dropzone"></div>
+                            </div>
                             <div class="clearfix"></div>
-                            <div class="form-group">
-                                <textarea autocomplete="off" class="markdown-textarea" id="text" name="text"
-                                          style="height: 450px"
+
+
+<!--                            markdown编辑区-->
+                            <div class="form-group" style="position: relative">
+                                <button type="button" class="layui-btn" id="markdown_file"><i class="layui-icon"></i>上传文件</button>
+
+                                <textarea style="height: 450px" autocomplete="off" id="text" name="text"
+                                          class="markdown-textarea"
                                           th:utext="${contents!=null and contents.content !=null}?${contents.content}: ''"></textarea>
                             </div>
 
                             <div class="form-group col-md-3 col-sm-4">
                                 <label class="col-sm-4">开启评论</label>
                                 <div class="col-sm-8">
-                                    <div onclick="allow_comment(this);"
-                                         th:class="${contents!=null and contents.allowComment!=null }?'toggle toggle-success allow-'+${contents.allowComment}:'toggle toggle-success allow-true'"></div>
+                                    <div th:class="${contents!=null and contents.allowComment!=null }?'toggle toggle-success allow-'+${contents.allowComment}:'toggle toggle-success allow-true'"
+                                         onclick="allow_comment(this);"></div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-3 col-sm-4">
                                 <label class="col-sm-4">允许Ping</label>
                                 <div class="col-sm-8">
-                                    <div onclick="allow_ping(this);"
-                                         th:class="${contents!=null and contents.allowPing !=null}?'toggle toggle-success allow-'+${contents.allowPing}:'toggle toggle-success allow-true'"></div>
+                                    <div th:class="${contents!=null and contents.allowPing !=null}?'toggle toggle-success allow-'+${contents.allowPing}:'toggle toggle-success allow-true'"
+                                         onclick="allow_ping(this);"></div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-3 col-sm-4">
                                 <label class="col-sm-4">允许订阅</label>
                                 <div class="col-sm-8">
-                                    <div onclick="allow_feed(this);"
-                                         th:class="${contents!=null and  contents.allowFeed !=null}?'toggle toggle-success allow-'+${contents.allowFeed}: 'toggle toggle-success allow-true'"></div>
+                                    <div th:class="${contents!=null and  contents.allowFeed !=null}?'toggle toggle-success allow-'+${contents.allowFeed}: 'toggle toggle-success allow-true'"
+                                         onclick="allow_feed(this);"></div>
                                 </div>
                             </div>
 
@@ -129,14 +220,15 @@
 
                             <div class="text-right">
                                 <a class="btn btn-default waves-effect waves-light" th:href="@{/admin/article}">返回列表</a>
-                                <button class="btn btn-primary waves-effect waves-light" onclick="subArticle('publish');"
-                                        type="button">
+                                <button type="button" class="btn btn-primary waves-effect waves-light"
+                                        onclick="subArticle('publish');">
                                     保存文章
                                 </button>
-                                <button class="btn btn-warning waves-effect waves-light" onclick="subArticle('draft');"
-                                        type="button">
+                                <button type="button" class="btn btn-warning waves-effect waves-light"
+                                        onclick="subArticle('draft');">
                                     存为草稿
                                 </button>
+                            </div>
                             </div>
                         </form>
                     </div>
@@ -146,7 +238,84 @@
         </div>
     </div>
 </div>
+
 <div th:replace="admin/footer :: footer"></div>
+
+<script crossorigin="anonymous" integrity="sha512-9e9rr82F9BPzG81+6UrwWLFj8ZLf59jnuIA/tIf8dEGoQVu7l5qvr02G/BiAabsFOYrIUTMslVN+iDYuszftVQ==" src="https://lib.baomitu.com/dropzone/5.9.3/dropzone.js"></script><script src="//cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
+<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    let file_dir=/*[[${contents!=null and contents.fileDir!=null}?${contents.fileDir}: ${file_dir}]]*/
+    layui.use(['upload', 'element', 'layer'], function() {
+        var $ = layui.jquery
+            , upload = layui.upload
+            , element = layui.element
+            , layer = layui.layer;
+        upload.render({
+            elem: '#markdown_file'
+            , url: '/admin/attach/upload_markdown' //此处配置你自己的上传接口即可
+            , accept: 'file' //普通文件
+            ,data:{
+                    file_dir: file_dir
+                }
+            , done: function (res) {
+                layer.msg('上传成功');
+                $("#md-editarea textarea").val(res.payload)
+            }
+        });
+    })
+    /*]]>*/
+</script>
+<!--todo 文章编辑页面--图片上传同时携带cid-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+        Dropzone.options.uploadPictures  = { // camelized version of the `id`
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 2, // MB
+        url: "/admin/attach/upload_files_for_md",
+        init: function () {
+            var myDropzone = this;
+            myDropzone.processQueue();
+            myDropzone.on("sending", function(file, xhr, formData) {
+                // Will send the filesize along with the file as POST data.
+                formData.append("cid",/*[[${contents!=null and contents.cid!=null}?${contents.cid}: '']]*/ );
+                formData.append("file_dir",file_dir)
+            });
+            myDropzone.on("success", function (file, msg) {
+                console.log(msg);
+                if (msg.success !== true) {
+                    tale.alertError('上传文件大于50M');
+                }
+                // setTimeout(function () {
+                //     window.location.reload();
+                // }, 200);
+            });
+
+        },
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+                done("Naha, you don't.");
+            }
+            else { done(); }
+        }
+    };
+
+
+
+    var clipboard = new Clipboard('button.copy', {
+        text: function (trigger) {
+            return $(trigger).attr('url');
+        }
+    });
+
+    clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        e.clearSelection();
+    });
+    /*]]>*/
+</script>
 
 <script th:src="@{/admin/plugins/tagsinput/jquery.tagsinput.min.js}"></script>
 <script th:src="@{/admin/plugins/jquery-multi-select/jquery.quicksearch.js}"></script>

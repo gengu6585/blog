@@ -5,7 +5,7 @@
 </head>
 <body class="theme-darling">
 <div class="container sidebar-position-right page-home">
-    <header class="header" id="header" th:replace="themes/default/DIYgodNav::nav()">
+    <header th:replace="themes/default/DIYgodNav::nav()" id="header" class="header">
     </header>
     <main class="main" id="main">
         <div class="main-inner">
@@ -13,7 +13,7 @@
                 <div class="content" id="content">
                     <div class="post-block category post">
 
-                        <div class="posts-collapse" id="posts">
+                        <div id="posts" class="posts-collapse">
                             <div class="category-all-page">
                                 <div class="category-all-title">分类</div>
                                 <div class="category-all">
@@ -27,9 +27,9 @@
                             </div>
 
                             <div class="collection-title"><h1 th:inline="text">[[${keyword}]]<small th:text="${type}"></small></h1></div>
-                            <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article" th:each="article:${articles.list}">
+                            <article th:each="article:${articles.list}" class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
                                 <header class="post-header"><h2 class="post-title">
-                                    <a class="post-title-link scaleup" th:href="${commons.permalink(article)}"> <span itemprop="name" th:text="${article.title}"></span></a></h2>
+                                    <a class="post-title-link scaleup" th:href="${commons.permalink(article)}"> <span th:text="${article.title}" itemprop="name"></span></a></h2>
                                     <div class="post-meta">
                                         <time class="post-time" itemprop="dateCreated"
                                               th:text="${commons.fmtdate(article.created,'MM-dd')}">
@@ -52,9 +52,9 @@
     <div th:replace="themes/default/DIYgodFoot::footer()"></div>
 
 </div>
-<script src="/user/js/sagiri.min.js?v=1.0.1" type="text/javascript"></script>
+<script type="text/javascript" src="/user/js/sagiri.min.js?v=1.0.1"></script>
 <script>"serviceWorker" in navigator && window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
+    navigator.serviceWorker.register("/user/js/sw.js")
 })</script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 </head>
 <body class="theme-darling">
 <div class="container sidebar-position-right page-home">
-    <header class="header" id="header" th:replace="themes/default/DIYgodNav::nav()">
+    <header th:replace="themes/default/DIYgodNav::nav()" id="header" class="header">
     </header>
     <main class="main" id="main">
         <div class="main-inner">
@@ -65,7 +65,7 @@
     <div th:replace="themes/default/DIYgodFoot::footer()"></div>
 
 </div>
-<script src="/user/js/sagiri.min.js?v=1.0.1" type="text/javascript"></script>
-<script>"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("/sw.js")})</script>
+<script type="text/javascript" src="/user/js/sagiri.min.js?v=1.0.1"></script>
+<script>"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("/user/js/sw.js")})</script>
 </body>
 </html>

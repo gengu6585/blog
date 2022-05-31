@@ -159,7 +159,7 @@ public class SiteServiceImpl implements SiteService {
 
         Long comments = commentDao.countByExample(new CommentExample());
 
-        Long attachs = attachDao.countByExample(new UploadFileExample());
+        Long attachs = (long) attachDao.countByExample(new UploadFileExample());
 
         MetaExample metaExample = new MetaExample();
         metaExample.createCriteria().andTypeEqualTo(SiteProperty.LINK.getProperty());

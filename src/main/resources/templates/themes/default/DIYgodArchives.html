@@ -5,14 +5,14 @@
 </head>
 <body class="theme-darling">
 <div class="container sidebar-position-right page-home">
-    <header class="header" id="header" th:replace="themes/default/DIYgodNav::nav()">
+    <header th:replace="themes/default/DIYgodNav::nav()" id="header" class="header">
     </header>
     <main class="main" id="main">
         <div class="main-inner">
             <div class="content-wrap">
                 <div class="content" id="content">
                     <div class="post-block archive post">
-                        <div class="posts-collapse" id="posts"><h1 class="post-collapse-title" itemprop="name headline">
+                        <div id="posts" class="posts-collapse"><h1 class="post-collapse-title" itemprop="name headline">
                             归档</h1>
                             <div class="category-all-page">
                                 <div class="category-all-title">分类</div>
@@ -26,11 +26,11 @@
                                 </div>
                             </div>
                             <div class="collection-year" th:each="archive : ${archives}">
-                                <div class="collection-title"><h1 class="archive-year" th:id="'archive-year-'+${archive.date}" th:text="${archive.date}">2021</h1>
+                                <div class="collection-title"><h1 class="archive-year" th:text="${archive.date}" th:id="'archive-year-'+${archive.date}">2021</h1>
                                 </div>
                                 <article class="post post-type-normal" th:each="article : ${archive.articles}">
                                     <header class="post-header"><h2 class="post-title">
-                                        <a class="post-title-link scaleup" itemprop="url" th:href="${commons.permalink(article.cid, article.slug)}">
+                                        <a class="post-title-link scaleup" th:href="${commons.permalink(article.cid, article.slug)}" itemprop="url">
                                             <span itemprop="name" th:text="${article.title}"></span></a></h2>
                                         <div class="post-meta">
                                             <time class="post-time" itemprop="dateCreated"
@@ -54,9 +54,9 @@
     <div th:replace="themes/default/DIYgodFoot::footer()"></div>
 
 </div>
-<script src="/user/js/sagiri.min.js?v=1.0.1" type="text/javascript"></script>
+<script type="text/javascript" src="/user/js/sagiri.min.js?v=1.0.1"></script>
 <script>"serviceWorker" in navigator && window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
+    navigator.serviceWorker.register("/user/js/sw.js")
 })</script>
 </body>
 </html>

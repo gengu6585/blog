@@ -102,6 +102,7 @@ public class BaseInterceptor implements HandlerInterceptor {
         httpServletRequest.setAttribute("adminCommons", adminCommons);
         List<Meta> categories = propertyService.getMetas(SiteProperty.CATEGORY.getProperty());
         HashMap<String, Integer> categoriesMap = new HashMap<>();
+//        计算各个目录对应的文章数
         for (Meta category : categories) {
             categoriesMap.put(category.getName(), articleService.getArticleNumsByMetaId(category.getMid()));
         }

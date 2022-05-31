@@ -68,7 +68,6 @@
       (pos * (this.size / this.total)) + "px";
     if (update !== false) this.scroll(pos, this.orientation);
   };
-
   Bar.prototype.update = function(scrollSize, clientSize, barSize) {
     this.screen = clientSize;
     this.total = scrollSize;
